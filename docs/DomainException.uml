@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>\App\Exceptions\DomainException</OriginalElement>
+  <nodes>
+    <node x="838.5611814345991" y="716.4282700421942">\App\LogLevel</node>
+    <node x="611.0" y="711.5">\App\Classifiable</node>
+    <node x="540.125" y="1078.0">\App\Exceptions\CustomHttpException</node>
+    <node x="163.0" y="613.0">\RuntimeException</node>
+    <node x="229.625" y="836.0">\App\Exceptions\HttpDomainException</node>
+    <node x="0.0" y="293.0">\Exception</node>
+    <node x="17.625" y="914.5">\App\Exceptions\CustomDomainException</node>
+    <node x="85.5" y="0.0">\Throwable</node>
+    <node x="83.5" y="698.0">\App\Exceptions\DomainException</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\App\Exceptions\HttpDomainException" target="\App\Classifiable">
+      <point x="130.75" y="-96.0" />
+      <point x="621.875" y="811.0" />
+      <point x="651.75" y="811.0" />
+      <point x="-40.75" y="30.5" />
+    </edge>
+    <edge source="\App\Exceptions\CustomHttpException" target="\App\Exceptions\HttpDomainException">
+      <point x="-43.5" y="-30.5" />
+      <point x="583.625" y="1053.0" />
+      <point x="491.125" y="1053.0" />
+      <point x="0.0" y="96.0" />
+    </edge>
+    <edge source="\App\Exceptions\CustomDomainException" target="\App\Exceptions\DomainException">
+      <point x="0.0" y="-17.5" />
+      <point x="113.625" y="811.0" />
+      <point x="160.25" y="811.0" />
+      <point x="-76.75" y="44.0" />
+    </edge>
+    <edge source="\App\Exceptions\HttpDomainException" target="\App\Exceptions\DomainException">
+      <point x="-130.75" y="-96.0" />
+      <point x="360.375" y="811.0" />
+      <point x="313.75" y="811.0" />
+      <point x="76.75" y="44.0" />
+    </edge>
+    <edge source="\RuntimeException" target="\Exception">
+      <point x="0.0" y="-17.5" />
+      <point x="0.0" y="135.0" />
+    </edge>
+    <edge source="\App\Exceptions\CustomHttpException" target="\App\Classifiable">
+      <point x="43.5" y="-30.5" />
+      <point x="670.625" y="1053.0" />
+      <point x="763.125" y="1053.0" />
+      <point x="763.125" y="811.0" />
+      <point x="733.25" y="811.0" />
+      <point x="40.75" y="30.5" />
+    </edge>
+    <edge source="\Exception" target="\Throwable">
+      <point x="0.0" y="-135.0" />
+      <point x="0.0" y="121.5" />
+    </edge>
+    <edge source="\App\Exceptions\DomainException" target="\RuntimeException">
+      <point x="0.0" y="-44.0" />
+      <point x="0.0" y="17.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.817946505608283" x="589.5" y="569.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constants</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

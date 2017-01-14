@@ -1,0 +1,123 @@
+{
+	"id": "3a0b477c-be27-b6c0-491a-ebdb78e29c6f",
+	"name": "Working-With-PHP-Exceptions",
+	"description": "",
+	"order": [
+		"31189c49-1722-3e49-9e08-dec031d81f1d",
+		"b1344851-00e8-61c5-59e2-75fe7ff50bed",
+		"583be366-355a-6f42-0be2-3949512bee5c",
+		"c065c9e4-720b-7bf7-9aaa-36b299965875",
+		"320d3d6d-721b-9cfb-60c7-c36b741de968"
+	],
+	"folders": [],
+	"timestamp": 1484399343863,
+	"owner": "736341",
+	"public": false,
+	"requests": [
+		{
+			"id": "31189c49-1722-3e49-9e08-dec031d81f1d",
+			"headers": "Accept: application/json\n",
+			"url": "http://:host/exceptions/domain",
+			"preRequestScript": null,
+			"pathVariables": {
+				"host": "working-with-exceptions.dev"
+			},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var res = JSON.parse(responseBody);\ntests[\"Compare field value\"] = res.code === 500;\ntests[\"Status code is 500\"] = responseCode.code === 500;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484400273568,
+			"name": "DomainException",
+			"description": "",
+			"collectionId": "3a0b477c-be27-b6c0-491a-ebdb78e29c6f",
+			"responses": []
+		},
+		{
+			"id": "320d3d6d-721b-9cfb-60c7-c36b741de968",
+			"headers": "Accept: application/json\n",
+			"url": "http://:host/exceptions/model-not-found",
+			"preRequestScript": null,
+			"pathVariables": {
+				"host": "working-with-exceptions.dev"
+			},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var res = JSON.parse(responseBody);\ntests[\"Compare field value\"] = res.code === 404;\ntests[\"Status code is 500\"] = responseCode.code === 404;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484400429789,
+			"name": "ModelNotFoundException",
+			"description": "",
+			"collectionId": "3a0b477c-be27-b6c0-491a-ebdb78e29c6f",
+			"responses": []
+		},
+		{
+			"id": "583be366-355a-6f42-0be2-3949512bee5c",
+			"headers": "Accept: application/json\n",
+			"url": "http://:host/exceptions/http-domain",
+			"preRequestScript": null,
+			"pathVariables": {
+				"host": "working-with-exceptions.dev"
+			},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var res = JSON.parse(responseBody);\ntests[\"Compare field value\"] = res.code === 400;\ntests[\"Status code is 500\"] = responseCode.code === 400;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484400364010,
+			"name": "HttpDomainException",
+			"description": "",
+			"collectionId": "3a0b477c-be27-b6c0-491a-ebdb78e29c6f",
+			"responses": []
+		},
+		{
+			"id": "b1344851-00e8-61c5-59e2-75fe7ff50bed",
+			"headers": "Accept: application/json\n",
+			"url": "http://:host/exceptions/custom-domain",
+			"preRequestScript": null,
+			"pathVariables": {
+				"host": "working-with-exceptions.dev"
+			},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var res = JSON.parse(responseBody);\ntests[\"Compare field value\"] = res.code === 500;\ntests[\"Status code is 500\"] = responseCode.code === 500;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484400309987,
+			"name": "CustomDomainException",
+			"description": "",
+			"collectionId": "3a0b477c-be27-b6c0-491a-ebdb78e29c6f",
+			"responses": []
+		},
+		{
+			"id": "c065c9e4-720b-7bf7-9aaa-36b299965875",
+			"headers": "Accept: application/json\n",
+			"url": "http://:host/exceptions/custom-http",
+			"preRequestScript": null,
+			"pathVariables": {
+				"host": "working-with-exceptions.dev"
+			},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var res = JSON.parse(responseBody);\ntests[\"Compare field value\"] = res.code === 409;\ntests[\"Status code is 500\"] = responseCode.code === 409;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484400379299,
+			"name": "CustomHttpException",
+			"description": "",
+			"collectionId": "3a0b477c-be27-b6c0-491a-ebdb78e29c6f",
+			"responses": []
+		}
+	]
+}
