@@ -9,7 +9,6 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Response;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Psr\Log\LoggerInterface;
@@ -64,39 +63,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof HttpDomainException) {
-            $statusCode = $exception->getStatusCode();
-
-            return response()->json(
-                [
-                    'code' => $statusCode,
-                    'error' => (object) $exception->getArgs(),
-                ],
-                $statusCode, $exception->getHeaders()
-            );
-        } elseif ($exception instanceof DomainException) {
-            $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
-
-            return response()->json(
-                [
-                    'code' => $statusCode,
-                    'error' => (object) $exception->getArgs(),
-                ],
-                $statusCode
-            );
-        } elseif ($exception instanceof ModelNotFoundException) {
-            $statusCode = Response::HTTP_NOT_FOUND;
-
-            return response()->json(
-                [
-                    'code' => $statusCode,
-                    'error' => $exception->getMessage(),
-                ],
-                $statusCode
-            );
-        }
-
-        return parent::render($request, $exception);
+        return $this->getRenderingStrategy($request, $exception)
+            ->render($request, $exception);
     }
 
     /**
@@ -113,5 +81,46 @@ class Handler extends ExceptionHandler
         }
 
         return redirect()->guest('login');
+    }
+
+    /**
+     * 각 예외에 맞는 렌더러 인스턴스를 생성합니다.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param Exception $exception
+     * @return DomainException|HttpDomainException
+     *      |ModelNotFoundException|\Illuminate\Foundation\Application|mixed
+     */
+    protected function getRenderingStrategy($request, Exception $exception)
+    {
+        if ($exception instanceof HttpDomainException) {
+            return new \App\Exceptions\Renderers\HttpDomainException;
+        } elseif ($exception instanceof DomainException) {
+            return new \App\Exceptions\Renderers\DomainException;
+        } elseif ($exception instanceof ModelNotFoundException) {
+            return new \App\Exceptions\Renderers\ModelNotFoundException;
+        }
+
+        return app(get_parent_class($this));
+    }
+
+    /**
+     * 라라벨 매직을 이용하여 getRenderingStrategy와 똑같은 일을 하는 메서드입니다.
+     * 예외 이름과 렌더러 이름이 같다는 컨벤션을 지킬 수 있다면 이 방법도 대안입니다만..
+     * 위처럼 정통적인 Strategy 패턴을 쓰는 것에 비해 가독성이 떨어집니다.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param Exception $exception
+     * @return \Illuminate\Foundation\Application|mixed
+     */
+    protected function getRenderer($request, Exception $exception)
+    {
+        $class = "\\App\\Exceptions\\Renderers\\" . class_basename(get_class($exception));
+
+        if (class_exists($class)) {
+            return app($class);
+        }
+
+        return app(get_parent_class($this));
     }
 }
