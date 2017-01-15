@@ -22,4 +22,37 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         return $app;
     }
+
+    /**
+     * Set an expected exception.
+     *
+     * @param string $exception
+     * @return $this
+     */
+    public function expectException($exception)
+    {
+        $this->disableExceptionHandling();
+        parent::expectException($exception);
+
+        return $this;
+    }
+
+    /**
+     * Disable Laravel's exception handling.
+     *
+     * @return $this
+     */
+    protected function disableExceptionHandling()
+    {
+        app()->instance(App\Exceptions\Handler::class, new class extends App\Exceptions\Handler {
+            public function __construct() {}
+            public function report(Exception $exception) {}
+            public function render($request, Exception $exception)
+            {
+                throw $exception;
+            }
+        });
+
+        return $this;
+    }
 }
