@@ -16,6 +16,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
+    private $sentryID;
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -47,7 +49,7 @@ class Handler extends ExceptionHandler
             call_user_func([$logger, $method], $exception);
 
             if ($logLevel->getValue() <= LogLevel::ERROR) {
-                var_dump('관리자에게 알림을 보내거나 SaaS 서비스에 로그를 등록하는 등의 특별한 예외 리포팅 처리를 합니다');
+                $this->sentryID = app('sentry')->captureException($exception);
             }
         } else {
             parent::report($exception);
@@ -89,7 +91,7 @@ class Handler extends ExceptionHandler
      * @param \Illuminate\Http\Request $request
      * @param Exception $exception
      * @return DomainException|HttpDomainException
-     *      |ModelNotFoundException|\Illuminate\Foundation\Application|mixed
+     *      |ModelNotFoundException|mixed
      */
     protected function getRenderingStrategy($request, Exception $exception)
     {
@@ -101,7 +103,21 @@ class Handler extends ExceptionHandler
             return new \App\Exceptions\Renderers\ModelNotFoundException;
         }
 
-        return app(get_parent_class($this));
+        return new class($this->sentryID) {
+            private $sentryID;
+
+            public function __construct($sentryID)
+            {
+                $this->sentryID = $sentryID;
+            }
+
+            public function render($request, Exception $exception)
+            {
+                return response()->view('errors.500', [
+                    'sentryID' => $this->sentryID,
+                ], 500);
+            }
+        };
     }
 
     /**
