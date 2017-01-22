@@ -18,6 +18,6 @@ class CustomHttpException extends HttpDomainException implements Classifiable
      */
     public function getLogLevel()
     {
-        return LogLevel::getInstance('DEBUG');
+        return LogLevel::getInstance('ERROR');
     }
 }

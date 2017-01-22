@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Classifiable;
 use App\LogLevel;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
@@ -47,7 +48,8 @@ class Handler extends ExceptionHandler
             call_user_func([$logger, $method], $exception);
 
             if ($logLevel->getValue() <= LogLevel::ERROR) {
-                var_dump('관리자에게 알림을 보내거나 SaaS 서비스에 로그를 등록하는 등의 특별한 예외 리포팅 처리를 합니다');
+                // @see https://docs.bugsnag.com/platforms/php/laravel/
+                Bugsnag::notifyException($exception);
             }
         } else {
             parent::report($exception);
